@@ -1,0 +1,16 @@
+{
+  "short_name": "Cuba Board",
+  "name": "Cuba Board — AI Learning & Quiz Platform",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0B1020",
+  "background_color": "#0B1020",
+  "description": "AI-powered collaborative learning, quiz generation, and competitive study platform."
+}
