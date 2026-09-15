@@ -1,73 +1,88 @@
-# React + TypeScript + Vite
+# CUBA BOARD — Master Product & Technical Implementation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Cuba Board** is an AI-powered collaborative learning, quiz generation, and competitive study platform built with **React**, **TypeScript**, **Tailwind CSS**, **Node.js + Express**, **Prisma PostgreSQL**, and **Supabase**.
 
-Currently, two official plugins are available:
+> **Master Product Version**: 1.0  
+> **Repository**: [https://github.com/Yashikasinghh/CUBA-BOARD](https://github.com/Yashikasinghh/CUBA-BOARD)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Core Learning Loop
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+$$\text{Upload} \longrightarrow \text{Analyze} \longrightarrow \text{Generate} \longrightarrow \text{Play} \longrightarrow \text{Score} \longrightarrow \text{Revise} \longrightarrow \text{Improve}$$
 
-## Expanding the ESLint configuration
+1. **Upload**: Upload PDF, TXT, or paste lecture notes into your study library.
+2. **Analyze**: AI text extraction engine cleans document text, estimates page counts, and extracts key topics.
+3. **Generate**: Grounded AI engine generates structured assessments with Zod validation (4 options, correct answer, explanation, source page references).
+4. **Play**: Play timed solo quizzes with visual timers, auto-submit on timeout, and keyboard navigation (`1-4`, `Enter`).
+5. **Score**: Earn XP, level up, maintain daily streaks, and inspect detailed answer breakdowns.
+6. **Revise**: Practice 3D interactive flashcards with spaced repetition and generate targeted **Mistake Revision Quizzes**.
+7. **Compete**: Challenge friends in private 1v1 battle rooms or enter the **Random Matchmaking Queue** (MMR Rating system).
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠 Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Frontend**: React 19, TypeScript, Vite, Tailwind CSS v4, Framer Motion, Lucide Icons, Recharts, Zustand.
+- **Backend**: Node.js, Express, TypeScript, Prisma ORM, PostgreSQL.
+- **AI Processing**: Google Gemini API integration with Zod JSON validation & grounded fallback engine.
+- **Real-Time Multiplayer**: Socket.IO client/server events & MMR matchmaking queue.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## ⚙️ Quick Start Setup
+
+### 1. Clone & Install Dependencies
+
+```bash
+git clone https://github.com/Yashikasinghh/CUBA-BOARD.git
+cd CUBA-BOARD
+
+# Install Frontend dependencies
+npm install
+
+# Install Backend dependencies
+cd backend
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Copy `.env.example` to `.env`:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cp .env.example .env
+cp backend/.env.example backend/.env
 ```
+
+### 3. Run Development Servers
+
+```bash
+# Start Frontend Dev Server (Vite)
+npm run dev
+
+# Start Backend Express API Server (in backend directory)
+cd backend
+npm run dev
+```
+
+Open `http://localhost:5173` in your browser.
+
+---
+
+## 📋 Phase Implementation Status (Phase 0 – Phase 13)
+
+- [x] **Phase 0**: Product Planning & Architecture Specification
+- [x] **Phase 1**: React + Vite + TypeScript Setup & Layout System
+- [x] **Phase 2**: Authentication & User Profile State Management
+- [x] **Phase 3**: Study Library & Document Management
+- [x] **Phase 4**: Document Processing & Text Extraction Engine
+- [x] **Phase 5**: AI Quiz Generation Engine with Zod Output Validation
+- [x] **Phase 6**: Quiz Configuration & Timed Solo Player
+- [x] **Phase 7**: Scoring, XP/Streak Rewards & Recharts Progress Analytics
+- [x] **Phase 8**: AI Opponent Mode (Controlled Bot Difficulty)
+- [x] **Phase 9**: Friend Multiplayer (Private Room Codes)
+- [x] **Phase 10**: Leaderboard, Social Features & Direct Challenges
+- [x] **Phase 11**: 3D Flashcards, Spaced Repetition & Mistake Quiz Generator
+- [x] **Phase 12**: Random Matchmaking Engine (Skill Rating / MMR Queue)
+- [x] **Phase 13**: Security, Environment Configuration & Deployment Setup

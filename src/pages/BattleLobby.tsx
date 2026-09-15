@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Swords, Users, Globe, Lock, Copy, Check } from 'lucide-react';
+import { Plus, Swords, Users, Globe, Lock, Copy, Check, Zap } from 'lucide-react';
 import { useUserStore } from '@/stores/useUserStore';
+import { MatchmakingModal } from '@/components/MatchmakingModal';
 
 interface Friend {
   id: string;
@@ -33,6 +34,8 @@ const BattleLobby = () => {
   const [timer, setTimer] = useState(15);
   const [isPublic, setIsPublic] = useState(true);
   const [joinCode, setJoinCode] = useState('');
+
+  const [isMatchmakingOpen, setIsMatchmakingOpen] = useState(false);
   
   // Custom notification state
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -72,6 +75,12 @@ const BattleLobby = () => {
 
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8 relative">
+      <MatchmakingModal
+        isOpen={isMatchmakingOpen}
+        onClose={() => setIsMatchmakingOpen(false)}
+        selectedSubject={subject}
+      />
+
       {/* Toast Notification */}
       {notification && (
         <div className="fixed bottom-6 right-6 z-50 bg-primary border border-primary/20 text-white px-5 py-3.5 rounded-xl shadow-2xl animate-fade-in flex items-center gap-2 font-medium text-sm">
@@ -81,10 +90,21 @@ const BattleLobby = () => {
       )}
 
       {/* Header */}
-      <div>
-        <p className="text-xs font-mono uppercase tracking-widest text-primary font-bold mb-1">Battle Arena</p>
-        <h1 className="text-3xl font-bold text-white mb-2">Quiz Battle Lobby</h1>
-        <p className="text-gray-400">Challenge classmates, climb the ranks, and master subjects in real-time battles.</p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <p className="text-xs font-mono uppercase tracking-widest text-primary font-bold mb-1">Battle Arena</p>
+          <h1 className="text-3xl font-bold text-white mb-2">Quiz Battle Lobby</h1>
+          <p className="text-gray-400">Challenge classmates, climb the ranks, and master subjects in real-time battles.</p>
+        </div>
+
+        {/* Quick Match Action */}
+        <button
+          onClick={() => setIsMatchmakingOpen(true)}
+          className="px-6 py-3.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-black font-black rounded-2xl text-sm transition-all shadow-[0_0_25px_rgba(245,158,11,0.3)] flex items-center gap-2"
+        >
+          <Zap className="w-5 h-5 fill-current" />
+          Find Random Match (MMR Queue)
+        </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
