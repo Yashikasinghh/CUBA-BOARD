@@ -19,7 +19,7 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <BookOpen className="text-primary w-8 h-8" />
-            <span className="text-2xl font-bold tracking-tight">Questify</span>
+            <span className="text-2xl font-bold tracking-tight">Cuba Board</span>
           </Link>
           <div className="flex items-center gap-4">
             {isAuthenticated ? (

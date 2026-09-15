@@ -12,17 +12,21 @@ app.use(express.json());
 
 // Routes
 import authRoutes from './routes/auth';
-import notesRoutes from './routes/notes';
+import materialsRoutes from './routes/materials';
 import quizRoutes from './routes/quiz';
+import aiRoutes from './routes/ai';
+import progressRoutes from './routes/progress';
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Questify API is running' });
+  res.json({ status: 'ok', message: 'Cuba Board Master API is running', version: '1.0.0' });
 });
 
 app.use('/api/auth', authRoutes);
-app.use('/api/notes', notesRoutes);
+app.use('/api/materials', materialsRoutes);
 app.use('/api/quizzes', quizRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/progress', progressRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Cuba Board API Server is running on port ${PORT}`);
 });

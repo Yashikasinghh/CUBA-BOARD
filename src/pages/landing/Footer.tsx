@@ -47,17 +47,17 @@ export const Footer: React.FC = () => {
           <div className="col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4 no-underline">
               <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-electric to-violet flex items-center justify-center">
-                <span className="text-white font-black text-lg leading-none">Q</span>
+                <span className="text-white font-black text-lg leading-none">C</span>
                 <div className="absolute -top-0.5 -right-0.5">
                   <Sparkles size={10} className="text-gold" />
                 </div>
               </div>
               <span className="text-xl font-bold text-text-primary">
-                Quest<span className="gradient-text-electric">ify</span>
+                Cuba <span className="gradient-text-electric">Board</span>
               </span>
             </Link>
             <p className="text-text-muted text-sm leading-relaxed max-w-xs">
-              Transform your study material into interactive quizzes, flashcards, and personalized learning paths with AI.
+              Cuba Board turns personal study material into an interactive learning game with AI quizzes, flashcards, and competitive study modes.
             </p>
           </div>
 
@@ -97,8 +97,8 @@ export const Footer: React.FC = () => {
           </div>
 
           <p className="text-text-muted text-xs flex items-center gap-1">
-            © 2024 Questify. All rights reserved. Made with{' '}
-            <Heart size={12} className="text-rose fill-rose" /> in India
+            © 2026 Cuba Board. Master Product Documentation v1.0. Made with{' '}
+            <Heart size={12} className="text-rose fill-rose" /> for students & learners
           </p>
         </div>
       </div>

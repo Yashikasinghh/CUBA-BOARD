@@ -13,7 +13,7 @@ const Layout = () => {
 
   // Redirect if not authenticated
   useEffect(() => {
-    const token = localStorage.getItem('questify_auth_token');
+    const token = localStorage.getItem('cuba_board_auth_token') || localStorage.getItem('questify_auth_token');
     if (!token && !isAuthenticated) {
       navigate('/login');
     }
@@ -26,7 +26,7 @@ const Layout = () => {
 
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: Home },
-    { name: 'Upload', path: '/upload', icon: Upload },
+    { name: 'Study Library', path: '/upload', icon: Upload },
     { name: 'Flashcards', path: '/flashcards', icon: Layers },
     { name: 'Leaderboard', path: '/leaderboard', icon: Trophy },
     { name: 'Battle Arena', path: '/battle', icon: Swords },
@@ -40,7 +40,7 @@ const Layout = () => {
         <div className="h-16 flex items-center px-6 border-b border-white/5">
           <Link to="/" className="flex items-center gap-2">
             <BookOpen className="text-primary w-6 h-6" />
-            <span className="text-xl font-bold tracking-tight text-white">Questify</span>
+            <span className="text-xl font-bold tracking-tight text-white">Cuba Board</span>
           </Link>
         </div>
         
