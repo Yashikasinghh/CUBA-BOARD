@@ -1,0 +1,41 @@
+# ═══════════════════════════════════════════════════════
+# CUBA BOARD — Phase 18: CI/CD GitHub Actions Workflow
+# Automated building, linting, & deployment verification
+# ═══════════════════════════════════════════════════════
+
+name: Cuba Board CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Frontend Dependencies
+        run: npm ci
+
+      - name: Validate TypeScript Compilation (Frontend)
+        run: npx tsc -b
+
+      - name: Build Production Frontend Bundle
+        run: npm run build
+
+      - name: Build Backend Service
+        run: |
+          cd backend
+          npm ci
+          npm run build
