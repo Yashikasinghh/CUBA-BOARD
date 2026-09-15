@@ -159,7 +159,7 @@ const ResultsPage = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <button 
             onClick={() => navigate('/dashboard')}
             className="flex-1 py-4 bg-surfaceHover hover:bg-white/10 text-white rounded-2xl font-bold transition-all flex justify-center items-center gap-2 border border-white/5"
@@ -168,6 +168,14 @@ const ResultsPage = () => {
             Dashboard
           </button>
           
+          <button 
+            onClick={() => navigate('/flashcards')}
+            className="flex-1 py-4 bg-violet/20 hover:bg-violet/30 text-violet-light border border-violet/30 rounded-2xl font-bold transition-all flex justify-center items-center gap-2"
+          >
+            <Zap className="w-5 h-5 text-gold" />
+            Flashcard Review
+          </button>
+
           <button 
             onClick={() => navigate(`/quiz/${attempt.quizId}`)}
             className="flex-1 py-4 bg-primary hover:bg-primaryHover text-white rounded-2xl font-bold transition-all shadow-[0_4px_0_rgba(67,56,202,1)] hover:translate-y-[2px] hover:shadow-[0_2px_0_rgba(67,56,202,1)] active:translate-y-[4px] active:shadow-none flex justify-center items-center gap-2"

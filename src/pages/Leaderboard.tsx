@@ -150,12 +150,12 @@ const Leaderboard = () => {
             Weekly
           </button>
           <button 
-            onClick={() => setTab('monthly')}
+            onClick={() => setTab('friends')}
             className={`px-6 py-2.5 rounded-full text-xs font-bold transition-all ${
-              tab === 'monthly' ? 'bg-primary text-white shadow-md' : 'text-gray-400 hover:text-white'
+              tab === 'friends' ? 'bg-primary text-white shadow-md' : 'text-gray-400 hover:text-white'
             }`}
           >
-            Monthly
+            Friends
           </button>
         </div>
       </div>
@@ -213,7 +213,7 @@ const Leaderboard = () => {
                 </div>
               </div>
               
-              <div className="flex items-center gap-6 text-sm">
+              <div className="flex items-center gap-4 text-sm">
                 <div className="flex items-center gap-1 text-orange-500 font-bold font-mono">
                   <Flame className="w-4 h-4" />
                   {userItem.streak}
@@ -222,6 +222,14 @@ const Leaderboard = () => {
                   <Zap className="w-4 h-4" />
                   {userItem.xp.toLocaleString()} XP
                 </div>
+                {!userItem.isCurrentUser && (
+                  <button
+                    onClick={() => window.location.href = '/battle'}
+                    className="px-3 py-1.5 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded-lg text-xs font-bold transition-all border border-primary/20"
+                  >
+                    Challenge
+                  </button>
+                )}
               </div>
             </div>
           ))}

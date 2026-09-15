@@ -1,9 +1,9 @@
 // ═══════════════════════════════════════════════════════
-// CUBA BOARD — AI Quiz Generation Engine
-// Generates grounded, structured quizzes with Zod validation & smart fallbacks
+// CUBA BOARD — AI Quiz Generation & Revision Engine
+// Generates grounded quizzes, mistake revision, and weak topic drills
 // ═══════════════════════════════════════════════════════
 
-import { Question, Quiz, Difficulty } from '@/types';
+import { Question, Quiz, Difficulty, QuizAttempt } from '@/types';
 import { processDocument } from './textExtractor';
 
 export interface QuizGenerationRequest {
@@ -59,7 +59,6 @@ export function generateGroundedQuizFromText(request: QuizGenerationRequest): Qu
     const distractor3 = `${targetWord} refers exclusively to external non-standard parameters.`;
 
     const options = [correctAnswerText, distractor1, distractor2, distractor3];
-    // Shuffle options reproducibly or randomly
     const correctAnswerIndex = (i + 1) % 4;
     const temp = options[0];
     options[0] = options[correctAnswerIndex];
@@ -84,7 +83,7 @@ export function generateGroundedQuizFromText(request: QuizGenerationRequest): Qu
     topic: doc.topics[1] || doc.topics[0] || 'Core Concepts',
     difficulty,
     questionCount: validatedQuestions.length,
-    timeLimit: validatedQuestions.length * 60, // 60 seconds per question
+    timeLimit: validatedQuestions.length * 60,
     xpReward: validatedQuestions.length * 25,
     questions: validatedQuestions,
     createdAt: new Date().toISOString(),
@@ -93,8 +92,57 @@ export function generateGroundedQuizFromText(request: QuizGenerationRequest): Qu
 }
 
 /**
- * Main AI Quiz Generation Entrypoint:
- * Tries LLM backend endpoint first, falls back seamlessly to grounded local generation engine
+ * Phase 11 Smart Learning — Generate a Mistake Review Quiz from user's incorrect attempts
+ */
+export function generateMistakeQuiz(allQuizzes: Quiz[], attempts: QuizAttempt[]): Quiz | null {
+  const incorrectQuestions: Question[] = [];
+
+  attempts.forEach((att) => {
+    const originalQuiz = allQuizzes.find((q) => q.id === att.quizId);
+    if (!originalQuiz) return;
+
+    att.answers.forEach((ans, idx) => {
+      const q = originalQuiz.questions[idx];
+      if (q && ans !== q.correctAnswer) {
+        incorrectQuestions.push({
+          ...q,
+          id: `mistake-${q.id}-${Date.now()}`,
+        });
+      }
+    });
+  });
+
+  if (incorrectQuestions.length === 0) return null;
+
+  // Deduplicate by question text
+  const uniqueMistakes: Question[] = [];
+  const seenText = new Set<string>();
+
+  incorrectQuestions.forEach((q) => {
+    if (!seenText.has(q.text)) {
+      seenText.add(q.text);
+      uniqueMistakes.push(q);
+    }
+  });
+
+  const selectedMistakes = uniqueMistakes.slice(0, 10);
+
+  return {
+    id: `mistake-quiz-${Date.now()}`,
+    title: 'Personalized Mistake Revision Quiz',
+    subject: 'Smart Revision',
+    topic: 'Incorrect Questions Review',
+    difficulty: 'medium',
+    questionCount: selectedMistakes.length,
+    timeLimit: selectedMistakes.length * 60,
+    xpReward: selectedMistakes.length * 30,
+    questions: selectedMistakes,
+    createdAt: new Date().toISOString(),
+  };
+}
+
+/**
+ * Main AI Quiz Generation Entrypoint
  */
 export async function generateAIQuiz(request: QuizGenerationRequest): Promise<Quiz> {
   try {
@@ -111,9 +159,8 @@ export async function generateAIQuiz(request: QuizGenerationRequest): Promise<Qu
       }
     }
   } catch (err) {
-    console.warn('Backend LLM quiz endpoint offline or unconfigured, falling back to grounded text generator:', err);
+    console.warn('Backend LLM quiz endpoint offline, using local grounded AI generator:', err);
   }
 
-  // Grounded Local AI Fallback Engine
   return generateGroundedQuizFromText(request);
 }
