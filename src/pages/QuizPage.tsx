@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { X, Clock, CheckCircle2, XCircle, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
+import { X, Clock, CheckCircle2, XCircle, ChevronLeft, ChevronRight, AlertCircle, Volume2, Download } from 'lucide-react';
 import { useUserStore } from '@/stores/useUserStore';
 import { mockQuizzes } from '@/lib/mockData';
 import { generateId } from '@/lib/utils';
+import { speakText, exportQuizToMarkdown, downloadFile } from '@/services/voiceQuizService';
 import type { QuizAttempt, Quiz } from '@/types';
 
 const QuizPage = () => {
@@ -166,6 +167,27 @@ const QuizPage = () => {
             className="h-full bg-gradient-to-r from-primary to-purple-500 rounded-full transition-all duration-300 ease-out"
             style={{ width: `${progress}%` }}
           />
+        </div>
+
+        {/* Voice Assistant & Study Guide Export */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => speakText(`Question ${currentIdx + 1}: ${question.text}`)}
+            className="p-2 bg-surfaceHover hover:bg-white/10 text-primary rounded-lg border border-white/5 transition-colors"
+            title="Read Question Aloud (Voice Assistant)"
+          >
+            <Volume2 className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => {
+              const md = exportQuizToMarkdown(quiz.title, quiz.questions);
+              downloadFile(`${quiz.title.replace(/\s+/g, '_')}_Study_Guide.md`, md);
+            }}
+            className="p-2 bg-surfaceHover hover:bg-white/10 text-gray-300 hover:text-white rounded-lg border border-white/5 transition-colors"
+            title="Export Printable Study Guide"
+          >
+            <Download className="w-4 h-4" />
+          </button>
         </div>
         
         <div className="flex items-center gap-2 text-gray-400 font-medium font-mono text-sm bg-surfaceHover px-3 py-1.5 rounded-lg border border-white/5">
