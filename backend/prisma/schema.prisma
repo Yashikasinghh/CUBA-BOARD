@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  profile   Profile?
+  notes     Note[]
+  attempts  QuizAttempt[]
+}
+
+model Profile {
+  id         String   @id @default(uuid())
+  userId     String   @unique
+  xp         Int      @default(0)
+  level      String   @default("Beginner")
+  streak     Int      @default(0)
+  studyTime  Int      @default(0) // in minutes
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+model Note {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  content   String?  // For raw text
+  fileUrl   String?  // For uploaded files
+  status    String   @default("processing") // 'processing', 'completed', 'error'
+  createdAt DateTime @default(now())
+  
+  user       User        @relation(fields: [userId], references: [id])
+  quizzes    Quiz[]
+  flashcards Flashcard[]
+}
+
+model Quiz {
+  id        String   @id @default(uuid())
+  noteId    String
+  title     String
+  createdAt DateTime @default(now())
+
+  note      Note          @relation(fields: [noteId], references: [id])
+  questions Question[]
+  attempts  QuizAttempt[]
+}
+
+model Question {
+  id            String   @id @default(uuid())
+  quizId        String
+  text          String
+  options       String[] // Stored as JSON array in postgres natively
+  correctAnswer Int
+  
+  quiz          Quiz     @relation(fields: [quizId], references: [id])
+}
+
+model QuizAttempt {
+  id        String   @id @default(uuid())
+  userId    String
+  quizId    String
+  score     Int
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+  quiz      Quiz     @relation(fields: [quizId], references: [id])
+}
+
+model Flashcard {
+  id        String   @id @default(uuid())
+  noteId    String
+  front     String
+  back      String
+  subject   String?
+  saved     Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  note      Note     @relation(fields: [noteId], references: [id])
+}
