@@ -4,6 +4,7 @@ import { useUserStore } from '@/stores/useUserStore';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { getInitials, getLevelName } from '@/lib/utils';
 import { useEffect } from 'react';
+import { AITutorSidecar } from './AITutorSidecar';
 
 const Layout = () => {
   const location = useLocation();
@@ -34,7 +35,7 @@ const Layout = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-background relative">
       {/* Sidebar (Discord-style: dark, compact, icon-focused) */}
       <aside className="w-64 bg-surface border-r border-white/5 flex flex-col hidden md:flex">
         <div className="h-16 flex items-center px-6 border-b border-white/5">
@@ -95,6 +96,9 @@ const Layout = () => {
       <main className="flex-1 overflow-y-auto">
         <Outlet />
       </main>
+
+      {/* Floating AI Tutor Sidecar */}
+      <AITutorSidecar />
     </div>
   );
 };
