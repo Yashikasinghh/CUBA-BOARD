@@ -5,6 +5,7 @@ import { useUserStore } from '@/stores/useUserStore';
 import { mockQuizzes } from '@/lib/mockData';
 import { generateId } from '@/lib/utils';
 import { speakText, exportQuizToMarkdown, downloadFile } from '@/services/voiceQuizService';
+import { soundEffects } from '@/services/soundEffectsService';
 import type { QuizAttempt, Quiz } from '@/types';
 
 const QuizPage = () => {
@@ -92,6 +93,13 @@ const QuizPage = () => {
     newAnswers[currentIdx] = selectedOption;
     setAnswers(newAnswers);
     
+    // Audio feedback Cues
+    if (selectedOption === question.correctAnswer) {
+      soundEffects.playCorrect();
+    } else {
+      soundEffects.playIncorrect();
+    }
+
     setIsAnswered(true);
   };
 
