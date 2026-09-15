@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Upload, Layers, Trophy, User, BookOpen, LogOut, Swords } from 'lucide-react';
+import { Home, Upload, Layers, Trophy, User, BookOpen, LogOut, Swords, ShoppingBag, GraduationCap } from 'lucide-react';
 import { useUserStore } from '@/stores/useUserStore';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { getInitials, getLevelName } from '@/lib/utils';
@@ -31,6 +31,8 @@ const Layout = () => {
     { name: 'Flashcards', path: '/flashcards', icon: Layers },
     { name: 'Leaderboard', path: '/leaderboard', icon: Trophy },
     { name: 'Battle Arena', path: '/battle', icon: Swords },
+    { name: 'Marketplace', path: '/marketplace', icon: ShoppingBag },
+    { name: 'Teacher Portal', path: '/teacher', icon: GraduationCap },
     { name: 'Profile', path: '/profile', icon: User },
   ];
 

@@ -11,6 +11,8 @@ import Leaderboard from './pages/Leaderboard';
 import Profile from './pages/Profile';
 import BattleLobby from './pages/BattleLobby';
 import BattleRoom from './pages/BattleRoom';
+import TeacherDashboard from './pages/TeacherDashboard';
+import Marketplace from './pages/Marketplace';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/battle" element={<BattleLobby />} />
           <Route path="/battle/:roomId" element={<BattleRoom />} />
+          <Route path="/teacher" element={<TeacherDashboard />} />
+          <Route path="/marketplace" element={<Marketplace />} />
         </Route>
       </Routes>
     </Router>
